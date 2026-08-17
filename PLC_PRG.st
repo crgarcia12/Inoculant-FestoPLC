@@ -1,4 +1,4 @@
-PROGRAM PRG_ValveSequencer
+PROGRAM PLC_PRG
 VAR_OUTPUT
     byValves : BYTE;
 END_VAR

@@ -6,7 +6,7 @@ CODESYS (Festo Automation Suite) program for a Festo **CPX-E-CEC-C1** controller
 
 ## What this does
 
-`PRG_ValveSequencer.st` cycles through the enabled valves one at a time, keeping each
+`PLC_PRG.st` cycles through the enabled valves one at a time, keeping each
 valve open for a configurable amount of time before moving on to the next enabled valve,
 then looping back to the first one.
 
@@ -20,7 +20,7 @@ then looping back to the first one.
 
 ## Files
 
-- `PRG_ValveSequencer.st` — Structured Text (ST) source for the CODESYS program.
+- `PLC_PRG.st` — Structured Text (ST) source for the CODESYS program.
   The file contains two parts, separated by a `// BODY` marker:
   - Declaration part (top): variables, including the configuration section.
   - Body part (bottom): the sequencing logic.
