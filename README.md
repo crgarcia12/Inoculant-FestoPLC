@@ -13,8 +13,9 @@ then looping back to the first one.
 - Up to 8 valves are supported, mapped to the 8 bits of the `byValves : BYTE` output
   (bit 0 = valve 1, bit 1 = valve 2, ... bit 7 = valve 8), which is wired to the
   CPX-E-8DO digital outputs.
-- Each valve can be individually enabled/disabled (e.g. only use valves 1, 2 and 4).
-- Each valve has its own configurable open time.
+- Each valve has its own configurable open time (`tValveN_Time`).
+- Setting a valve's time to `T#0S` skips that valve entirely (it will not open) — this
+  is also how you enable/disable a valve, so there is only one parameter per valve.
 - Configuration is done via named variables at the top of the declaration section, so it
   can be adjusted without needing to understand or edit the sequencing logic itself.
 
