@@ -7,9 +7,9 @@ VAR
     fbTimer : TON;
 
     // ============================================================
-    //  CONFIGURACION - edite solo esta seccion
-    //  Ponga TRUE en las valvulas que quiera usar en la secuencia
-    //  y ajuste el tiempo (segundos) que cada una permanece abierta.
+    //  CONFIGURATION - edit only this section
+    //  Set TRUE for the valves you want included in the sequence
+    //  and adjust how long (seconds) each one stays open.
     // ============================================================
     xValve1_Enabled : BOOL := TRUE;
     xValve2_Enabled : BOOL := TRUE;
@@ -28,12 +28,12 @@ VAR
     tValve6_Time     : TIME := T#5S;
     tValve7_Time     : TIME := T#5S;
     tValve8_Time     : TIME := T#5S;
-    // ============================ FIN ============================
+    // ============================ END ============================
 
-    // Variables internas - no es necesario editarlas
+    // Internal variables - no need to edit these
     aValveEnabled  : ARRAY[1..8] OF BOOL;
     aValveTime     : ARRAY[1..8] OF TIME;
-    byCurrentValve : BYTE := 0;   // valvula activa actual (1..8), 0 = ninguna
+    byCurrentValve : BYTE := 0;   // currently active valve (1..8), 0 = none
     byNextValve    : BYTE;
     i              : BYTE;
 END_VAR
@@ -42,7 +42,7 @@ END_VAR
 // BODY
 // ================================================================
 
-// Copiar configuracion a los arrays de trabajo (siempre al inicio del ciclo)
+// Copy configuration into the working arrays (every cycle)
 aValveEnabled[1] := xValve1_Enabled;  aValveTime[1] := tValve1_Time;
 aValveEnabled[2] := xValve2_Enabled;  aValveTime[2] := tValve2_Time;
 aValveEnabled[3] := xValve3_Enabled;  aValveTime[3] := tValve3_Time;
@@ -52,7 +52,7 @@ aValveEnabled[6] := xValve6_Enabled;  aValveTime[6] := tValve6_Time;
 aValveEnabled[7] := xValve7_Enabled;  aValveTime[7] := tValve7_Time;
 aValveEnabled[8] := xValve8_Enabled;  aValveTime[8] := tValve8_Time;
 
-// Si aun no hay valvula activa, buscar la primera habilitada
+// If there is no active valve yet, find the first enabled one
 IF byCurrentValve = 0 THEN
     FOR i := 1 TO 8 DO
         IF aValveEnabled[i] THEN
@@ -63,7 +63,7 @@ IF byCurrentValve = 0 THEN
 END_IF;
 
 IF byCurrentValve = 0 THEN
-    // Ninguna valvula habilitada: no activar nada
+    // No valve enabled: keep everything off
     byValves := BYTE#0;
     fbTimer(IN := FALSE, PT := T#1S);
 ELSE
@@ -72,7 +72,7 @@ ELSE
     fbTimer(IN := NOT fbTimer.Q, PT := aValveTime[byCurrentValve]);
 
     IF fbTimer.Q THEN
-        // Buscar la siguiente valvula habilitada (ciclico)
+        // Find the next enabled valve (cyclic)
         byNextValve := byCurrentValve;
         FOR i := 1 TO 8 DO
             byNextValve := byNextValve + 1;
