@@ -1,9 +1,9 @@
 PROGRAM PLC_PRG
-VAR_OUTPUT
-    byValves : BYTE;
-END_VAR
-
 VAR
+    // Direct hardware mapping: byValves IS the physical output byte
+    // (CPX-E-8DO), same as in the original working code.
+    byValves AT %QB0 : BYTE;
+
     fbTimer : TON;
 
     // ============================================================
