@@ -1,11 +1,5 @@
 PROGRAM PLC_PRG
 VAR
-    // Direct hardware mapping: byValves IS the physical output byte
-    // (CPX-E-8DO), same as in the original working code.
-    byValves AT %QB0 : BYTE;
-
-    fbTimer : TON;
-
     // ============================================================
     //  CONFIGURATION - edit only this section
     //  Set how long (seconds) each valve stays open.
@@ -20,6 +14,12 @@ VAR
     tValve7_Time     : TIME := T#0S;
     tValve8_Time     : TIME := T#0S;
     // ============================ END ============================
+
+    // Direct hardware mapping: byValves IS the physical output byte
+    // (CPX-E-8DO), same as in the original working code.
+    byValves AT %QB0 : BYTE;
+
+    fbTimer : TON;
 
     // Internal variables - no need to edit these
     aValveTime     : ARRAY[1..8] OF TIME;
