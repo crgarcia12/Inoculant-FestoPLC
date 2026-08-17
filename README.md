@@ -4,6 +4,31 @@ CODESYS (Festo Automation Suite) program for a Festo **CPX-E-CEC-C1** controller
 **CPX-E-8DO** digital output module attached, used to sequence up to 8 solenoid valves
 (inoculant dosing application).
 
+## How to upload (download) a new program
+1. Open `Festo Automation Suite`. Select the PLC and click `Open PPlugin`
+
+![Open Festo plugin](readme-media/1.OpenFesto.png)
+
+2. Connect and Open Codesys
+
+![Connect and Open Codesys](readme-media/2.ConnectCodesys.png)
+
+3. Paste the code. There are two code sections, 1. The `Variable declaration` and 2. The `Body`. Make sure you paste each part in the right place
+
+![Login to the device](readme-media/3.Code.png)
+
+
+4. Login to the device. You will be prompted to enter a password. (tips Guemes Lea)
+
+![Login to the device](readme-media/4.Login.png)
+
+5. Start the program and Create a boot application.
+Boot application will make sure the program starts automatically when the device is powered on.
+
+![Login to the device](readme-media/5.StartAndBootApp.png)
+
+You are done!
+
 ## What this does
 
 `PLC_PRG.st` cycles through the enabled valves one at a time, keeping each
