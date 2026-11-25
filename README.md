@@ -31,18 +31,30 @@ You are done!
 
 ## What this does
 
-`PLC_PRG.st` cycles through the enabled valves one at a time, keeping each
-valve open for a configurable amount of time before moving on to the next enabled valve,
-then looping back to the first one.
+`PLC_PRG.st` cycles through 4 configurable steps, skipping any disabled ones. Each step opens a selected group
+of valves together for a configurable duration. A single output-byte assignment
+switches directly to the next group, then the sequence loops back to the first
+enabled step.
+
+The default sequence runs each pump/valve pair together for **30 seconds**:
+**1+8**, **2+7**, **3+6**, **4+5**, then repeats.
 
 - Up to 8 valves are supported, mapped to the 8 bits of the `byValves : BYTE` output
   (bit 0 = valve 1, bit 1 = valve 2, ... bit 7 = valve 8), which is wired to the
   CPX-E-8DO digital outputs.
-- Each valve has its own configurable open time (`tValveN_Time`).
-- Setting a valve's time to `T#0S` skips that valve entirely (it will not open) — this
-  is also how you enable/disable a valve, so there is only one parameter per valve.
-- Configuration is done via named variables at the top of the declaration section, so it
-  can be adjusted without needing to understand or edit the sequencing logic itself.
+- Each step has a valve mask (`aStepValves[N]`) and duration (`aStepTime[N]`),
+  initialized directly in the two arrays.
+  In a binary mask, the bits from left to right represent valves **8 7 6 5 4 3 2 1**.
+  For example, `2#10000001` selects valves 1+8, and `2#01000010` selects valves 2+7.
+- A single set bit runs one valve; multiple set bits run valves in parallel.
+  A valve may appear in more than one step.
+- Setting a step's time to `T#0S` or its mask to `2#00000000` skips that step.
+  If all steps are disabled, all valves remain closed.
+- At each transition, the outgoing valves close and the incoming valves open in
+  the same output update, with no intentional all-off gap. Valves shared by
+  consecutive steps remain on.
+- To add or remove steps, update `cStepCount` and the entries in both array
+  initializers. The sequencing logic needs no changes.
 
 ## Files
 
