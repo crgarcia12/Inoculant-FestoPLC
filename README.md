@@ -5,27 +5,48 @@ CODESYS (Festo Automation Suite) program for a Festo **CPX-E-CEC-C1** controller
 (inoculant dosing application).
 
 ## How to upload (download) a new program
-1. Open `Festo Automation Suite`. Select the PLC and click `Open PPlugin`
+1. Connect the PC to the PLC network. In Windows, open **Control Panel > Network and Internet > Network Connections**.
+Right-click the network adapter connected to the PLC and select **Properties**.
+Use your PLC-connected adapter; its name may differ from the one shown.
 
-![Open Festo plugin](readme-media/1.OpenFesto.png)
+![Open the network adapter properties](readme-media/1.OpenNetwork.png)
 
-2. Connect and Open Codesys
+2. Select **Internet Protocol Version 4 (TCP/IPv4)** and click **Properties**.
 
-![Connect and Open Codesys](readme-media/2.ConnectCodesys.png)
+![Open IPv4 properties](readme-media/2.EditIpv4.png)
 
-3. Paste the code. There are two code sections, 1. The `Variable declaration` and 2. The `Body`. Make sure you paste each part in the right place
+3. Select **Use the following IP address**. The screenshot uses PC address **192.168.0.100**
+and subnet mask **255.255.240.0**. Use an unused PC address in the PLC's subnet,
+not the PLC's own address. For a direct PLC connection, the gateway and DNS fields
+can remain blank. Click **OK** to apply, then close the adapter properties.
 
-![Login to the device](readme-media/3.Code.png)
+![Configure the PC's static IPv4 address](readme-media/3.UpdateIPAddress.png)
 
+4. Open `Festo Automation Suite`. Select the PLC and click `Open PPlugin`
 
-4. Login to the device. You will be prompted to enter a password. (tips Guemes Lea)
+![Open Festo plugin](readme-media/4.OpenFesto.png)
 
-![Login to the device](readme-media/4.Login.png)
+5. Connect and Open Codesys
 
-5. Start the program and Create a boot application.
+![Connect and Open Codesys](readme-media/5.ConnectCodesys.png)
+
+6. Paste the code. There are two code sections, 1. The `Variable declaration` and 2. The `Body`. Make sure you paste each part in the right place
+
+![Paste the variable declarations and program body](readme-media/6.Code.png)
+
+7. Login to the device. You will be prompted to enter a password. (tips Guemes Lea)
+If CODESYS reports that the application has changed, select **Login with download**,
+not **Login with online change**. An online change keeps the running variable values,
+so new times/valves in `aStepTime`/`aStepValves` are not applied. After an online change,
+use **Online > Reset Cold** to load them instead. A download or reset stops the application.
+
+![Login to the device](readme-media/7.Login.png)
+
+8. Start the program and Create a boot application.
 Boot application will make sure the program starts automatically when the device is powered on.
+Without a new boot application, the previous program returns after a power cycle.
 
-![Login to the device](readme-media/5.StartAndBootApp.png)
+![Start the program and create a boot application](readme-media/8.StartAndBootApp.png)
 
 You are done!
 
